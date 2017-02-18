@@ -1,0 +1,647 @@
+﻿<Page
+    x:Class="FWord.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FWord"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="using:FWord.View" 
+    xmlns:VM="using:FWord.ViewModel"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+    xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:media="using:Microsoft.Xaml.Interactions.Media"
+    mc:Ignorable="d"
+    >
+    <Page.DataContext>
+        <VM:MainPageVM />
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///View/CustomButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="animationStatus">
+                <DoubleAnimation Storyboard.TargetName="imgStatus" Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:1.5"/>
+            </Storyboard>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid Background="#966F33">
+        <Grid HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Canvas.ZIndex="10"
+              Background="Black"
+              Opacity="0.6"
+              Visibility="{Binding BkgndControl.Visible}"
+              >
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Center">
+                <TextBlock
+                Text="{Binding BkgndControl.Text}"
+                FontSize="45"
+                FontWeight="Bold"
+                Foreground="#FAFAFA"
+                HorizontalAlignment="Center"
+                />
+                <TextBlock
+                    x:Name="txtLevel"
+                    Text="{Binding Player.Level}"
+                FontSize="45"
+                FontWeight="Bold"
+                Foreground="LightBlue"
+                HorizontalAlignment="Center"
+                    Visibility="{Binding BkgndControl.Visible}"
+                    />
+                <Button
+                    x:Name="btnReplay"
+                HorizontalAlignment="Center"
+                Canvas.ZIndex="10"
+            Width="64"
+            Height="64"
+            Style="{StaticResource CustomButton}"
+            Visibility="Collapsed"
+            view:PropertyCustomButton.NormalImage="ms-appx:///Assets/PlayAgain.png"    
+                Command="{Binding BtnPlayClick}"
+            />
+            </StackPanel>
+        </Grid>
+        <Grid
+            x:Name="gridStartGame"
+            HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"
+              Canvas.ZIndex="10"
+              Background="#663300"
+              Opacity="1" 
+            >
+            <StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft"
+                                Margin="0 0 50 0">
+                        <Image
+                        Source="ms-appx:///Assets/StoreLogo.png"
+                        Width="50"
+                        Height="50"
+                            Margin="0 20 0 0"
+                        />
+                        <TextBlock
+                FontWeight="Bold"
+                Text="Crossword"
+                Foreground="LightBlue"
+                FontSize="80"
+                />
+                    </StackPanel>
+
+                    <TextBlock
+                FontWeight="Bold"
+                Text="Mysterious"
+                Foreground="LightBlue"
+                FontSize="80"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="0 0 50 0"
+                />
+
+                    <TextBlock 
+                Foreground="LightBlue"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                FontSize="20"
+                Text="Version : 1.0"
+                        Margin="0 0 100 0"
+                />
+                    <TextBlock 
+                Foreground="LightBlue"
+                HorizontalAlignment="Right"
+                FontSize="20"
+                Text="By nullPointer"
+                        Margin="0 0 100 0"
+                />
+                </StackPanel>
+                <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                    <TextBlock 
+                    x:Name="txt1"
+                Foreground="#FAFAFA"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                Text="Welcome to mini game Crossword Mysterious!"
+                    Opacity="0"
+                >
+                        <TextBlock.Triggers>
+                            <EventTrigger>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="txt1" From="0" To="1" Duration="0:0:1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <TextBlock
+                    x:Name="txt2"
+                     Foreground="#FAFAFA"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                    Text="Trying to find the fastest possible"
+                     Opacity="0"
+                    >
+                        <TextBlock.Triggers>
+                            <EventTrigger>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="txt2" From="0" To="1" Duration="0:0:1" BeginTime="0:0:1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <TextBlock
+                    x:Name="txt3"
+                     Foreground="#FAFAFA"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                    Text="Every time you have 10s for think and choose (You can only choose the wrong 5 times)"
+                     Opacity="0"
+                    >
+                        <TextBlock.Triggers>
+                            <EventTrigger>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="txt3" From="0" To="1" Duration="0:0:1" BeginTime="0:0:2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <TextBlock
+                    x:Name="txt4"
+                     Foreground="#FAFAFA"
+                HorizontalAlignment="Center"
+                FontSize="20"
+                    Text="Are you ready ? Click button or Enter to start"
+                     Opacity="0"
+                    >
+                        <TextBlock.Triggers>
+                            <EventTrigger>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="txt4" From="0" To="1" Duration="0:0:1" BeginTime="0:0:3"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </TextBlock.Triggers>
+                    </TextBlock>
+                    <Button
+                x:Name="btnStart"
+                HorizontalAlignment="Center"
+                Canvas.ZIndex="10"
+                Width="128"
+                Height="128"
+                Style="{StaticResource CustomButton}"
+                view:PropertyCustomButton.NormalImage="ms-appx:///Assets/start.png"  
+                Click="Button_Click"
+                     Opacity="0"
+                    Margin="0 20 0 0"
+            >
+                        <Button.Triggers>
+                            <EventTrigger>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Storyboard.TargetName="btnStart" From="0" To="1" Duration="0:0:1" BeginTime="0:0:4"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="95" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <UI:AdControl
+                x:Name="adControl"
+               Grid.Row="0"
+               ApplicationId="0af823c3-8ac1-4722-9279-3306242fd09a"
+               AdUnitId="336179"
+               HorizontalAlignment="Center"
+               Height="90"
+               VerticalAlignment="Top"
+               Width="728"/>
+            <Grid
+                Grid.Row="1"
+                Height="Auto"
+                    >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="50 0 0 0"
+                    >
+                    <Image
+                        Width="64"
+                        Height="64"
+                        Margin="0 10 0 10"
+                        Source="ms-appx:///Assets/time.png"
+                        Opacity="0.7"
+                        />
+
+                    <Image
+                	Width="64"
+                	Height="64"
+                	Margin="10 10 0 10"
+                	Source="{Binding TimerMng.PathImageNumber}"
+                    RenderTransformOrigin="0.5,0.5"
+                	UseLayoutRounding="False" d:LayoutRounding="Auto"
+                        >
+                        <Image.RenderTransform>
+                            <CompositeTransform Rotation="29.24"/>
+                        </Image.RenderTransform>
+                    </Image>
+                </StackPanel>
+                <StackPanel
+                    Grid.Column="1"
+                    Orientation="Horizontal" 
+                    FlowDirection="RightToLeft"  
+                    Margin="0 0 60 0">
+                    <TextBlock
+                        Text="{Binding Player.Level}"
+                        Foreground="LightBlue"
+                        FontWeight="Bold"
+                        FontSize="60"
+                        HorizontalAlignment="Right"
+                        />
+                    <TextBlock 
+                        Width="20"/>
+                    <TextBlock
+                        Text="L  :"
+                        HorizontalAlignment="Right"
+                        Foreground="LightBlue"
+                        FontWeight="Bold"
+                        FontSize="60"
+                        />
+                </StackPanel>
+            </Grid>
+            <Grid
+                Grid.Row="2">
+                <Image
+                    x:Name="imgStatus"
+                    Width="48"
+                    Height="48"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="50 0 0 0"
+                    Source="{Binding Player.PathImageStatus}"
+                    Opacity="{Binding Player.OpacityStatus}"
+                    >
+                    <Interactivity:Interaction.Behaviors>
+                        <core:DataTriggerBehavior Binding="{Binding Path=Opacity,ElementName=imgStatus}" Value="1" ComparisonCondition="Equal">
+                            <media:ControlStoryboardAction Storyboard="{StaticResource animationStatus}"/>
+                        </core:DataTriggerBehavior>
+                    </Interactivity:Interaction.Behaviors>
+                </Image>
+                <StackPanel 
+                    Orientation="Horizontal" 
+                        HorizontalAlignment="Right"
+                        FlowDirection="RightToLeft" 
+                        Margin="0 10 50 10"
+                        >
+                    <ListView
+                    HorizontalAlignment="Right"                   
+                    ItemsSource="{Binding Player.ListPathImageTimes}"
+                    IsEnabled="False"
+                    >
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                    Width="64"
+                                    Height="64"
+                                    Source="{Binding}"
+                                    />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+                <Line X1="0" Y1="0" X2="1" Y2="0" Stretch="Fill" Stroke="LightBlue" VerticalAlignment="Bottom" Opacity="0.6" IsTapEnabled="False"/>
+            </Grid>
+            <Grid Grid.Row="3">
+            <GridView
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            ItemsSource="{Binding Player.ListCharacterFind}"  
+            IsHitTestVisible="False"
+            IsEnabled="False"
+            >
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                        BorderThickness="0 0 0 3"
+                        BorderBrush="LightBlue"                       
+                        >
+                            <TextBlock                                   
+                            Text="{Binding Val}"  
+                            FontSize="40"
+                            FontWeight="Bold"
+                            Foreground="{Binding CharOpacity.Color}"
+                            Opacity="{Binding CharOpacity.Opacity}"
+                            />
+                        </Border>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+            </Grid>
+            <Grid Grid.Row="4">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="148">
+                <StackPanel Orientation="Horizontal" 
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Center"
+                        Margin="10 0 10 0">
+                    <Button 
+                    x:Name="btnA"
+                    Width="64"
+                    Opacity="{Binding Player.ListOpacityCharacters[0].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/1.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="A"
+                    Margin="1 1 1 1"
+                    />
+                    <Button 
+                    x:Name="btnB"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[1].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/2.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="B"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnC"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[2].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/3.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="C"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnD"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[3].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/4.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="D"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnE"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[4].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/5.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="E"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnF"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[5].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/6.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="F"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnG"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[6].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/7.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="G"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnH"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[7].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/8.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="H"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnI"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[8].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/9.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="I"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnJ"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[9].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/10.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="J"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnK"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                  Opacity="{Binding Player.ListOpacityCharacters[10].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/11.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="K"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnL"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[11].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/12.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="L"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnM"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[12].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/13.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="M"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                        Margin="10 0 10 10"
+                        HorizontalAlignment="Center">
+
+                    <Button 
+                    x:Name="btnN"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[13].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/14.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="N"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnO"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[14].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/15.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="O"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnP"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[15].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/16.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="P"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnQ"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[16].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/17.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="Q"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnR"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[17].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/18.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="R"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnS"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[18].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/19.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="S"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnT"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[19].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/20.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="T"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnU"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[20].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/21.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="U"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnV"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                   Opacity="{Binding Player.ListOpacityCharacters[21].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/22.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="V"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnW"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                  Opacity="{Binding Player.ListOpacityCharacters[22].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/23.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="W"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnX"
+                    Width="{Binding Path=Width, ElementName=btnA}"
+                  Opacity="{Binding Player.ListOpacityCharacters[23].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/24.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="X"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnY"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                  Opacity="{Binding Player.ListOpacityCharacters[24].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/25.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="Y"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                    <Button 
+                    x:Name="btnZ"
+                     Width="{Binding Path=Width, ElementName=btnA}"
+                    Opacity="{Binding Player.ListOpacityCharacters[25].Opacity}"
+                    Style="{StaticResource CustomButton}"
+                    view:PropertyCustomButton.NormalImage="ms-appx:///Assets/Image/26.jpg"
+                    Command="{Binding BtnLetterClick}"
+                    CommandParameter="Z"
+                    Margin="{Binding Margin,ElementName=btnA}"
+                    />
+                </StackPanel>
+            </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
