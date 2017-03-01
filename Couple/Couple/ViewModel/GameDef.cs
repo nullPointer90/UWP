@@ -21,13 +21,6 @@ namespace Couple.ViewModel
         public const int TIME_7 = 80;
         public const int TIME_9 = 120;
 
-        public enum Type
-        {
-            NONE,
-            CHARACTER,
-            COLOR
-        }
-
         public enum State
         {
             NONE,

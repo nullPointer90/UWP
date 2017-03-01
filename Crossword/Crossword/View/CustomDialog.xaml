@@ -1,0 +1,36 @@
+﻿<ContentDialog
+    x:Class="Crossword.View.CustomDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Crossword.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    PrimaryButtonText="OK"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+    <ContentDialog.TitleTemplate>
+        <DataTemplate>
+            <TextBlock
+                Text="High Score"
+                FontStyle="Italic"
+                FontWeight="ExtraBlack"
+                />
+        </DataTemplate>
+    </ContentDialog.TitleTemplate>
+    <Grid>
+        <StackPanel>
+        <Rectangle
+            Fill="Transparent"
+            Height="20"
+            />
+        <TextBox
+            x:Name="tbUser"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            MaxLength="15"
+            Text=""
+            Margin="0 10 0 0"
+            />
+        </StackPanel>
+    </Grid>
+</ContentDialog>

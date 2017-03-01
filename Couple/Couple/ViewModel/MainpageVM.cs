@@ -64,29 +64,6 @@ namespace Couple.ViewModel
                     SetTimeCountDown(1);
                 });
             }
-         }
-
-        private DelegateCommand _typeChecked;
-        public DelegateCommand TypeChecked
-        {
-            get
-            {
-                return _typeChecked = _typeChecked ?? new DelegateCommand(
-                param =>
-                {
-                    string val = param as string;
-                    if (val == "1")
-                    {
-                        Game.TypeGame = (int)GameDef.Type.CHARACTER;
-                    }
-                    else if (val == "2")
-                    {
-                        Game.TypeGame = (int)GameDef.Type.COLOR;
-                    }
-                    else { }
-                    Game.CreateListData();
-                });
-            }
         }
 
         private DelegateCommand _itemMTClick;
@@ -97,11 +74,11 @@ namespace Couple.ViewModel
                 return _itemMTClick = _itemMTClick ?? new DelegateCommand(
                 param =>
                 {
-                    if (isProcessing)
+                    if (isProcessing || Game.StateGame != (int)GameDef.State.PLAY)
                         return;
                     //(param as TappedRoutedEventArgs).OriginalSource; ListViewItemPresenter
-                    ItemMgn att =  ((param as TappedRoutedEventArgs)?.OriginalSource as Border)?.DataContext as ItemMgn;
-                    if(att != null)
+                    ItemMgn att = ((param as TappedRoutedEventArgs)?.OriginalSource as Border)?.DataContext as ItemMgn;
+                    if (att != null)
                     {
                         int index = Game.ListData.IndexOf(att);
                         ProcessGame(index);
@@ -144,6 +121,7 @@ namespace Couple.ViewModel
         private void StartGame()
         {
             Game.IsEnableControl = false;
+            Game.StateGame = (int)GameDef.State.PLAY;
             Game.SetAllListVisible(2000);
             TimerData.Start();
         }
@@ -178,68 +156,58 @@ namespace Couple.ViewModel
             ItemMgn curData = Game.ListData.ElementAt(indexClick);
             if (IsBoxEmpty(curData))
             {
-                //Game Over
+                
                 isProcessing = false;
                 return;
             }
-            if (Game.TypeGame == (int)GameDef.Type.CHARACTER)
+            if (preData.Content == curData.Content)
             {
-                if (preData.Content == curData.Content)
+                Game.ListData[_preIndexClick].Visible = Visibility.Collapsed;
+                Game.ListData[indexClick].Visible = Visibility.Collapsed;
+                if(Game.IsCompleteLevel())
                 {
-                    Game.ListData[_preIndexClick].Visible = Visibility.Collapsed;
-                    Game.ListData[indexClick].Visible = Visibility.Collapsed;
-                }
-                else
-                {
-                    Game.ListData[_preIndexClick].TextVisible = Visibility.Collapsed;
-                    Game.ListData[indexClick].TextVisible = Visibility.Collapsed;
-                    Game.ListData[indexClick].BkgndItem = GameDef.COLOR_ITEM_NORMAL;
-                    Game.ListData[_preIndexClick].BkgndItem = GameDef.COLOR_ITEM_NORMAL;
-                }
-                _preIndexClick = -1;
-            }
-            else if (Game.TypeGame == (int)GameDef.Type.COLOR)
-            {
-                if (preData.Color == curData.Color)
-                {
-
-                }
-                else
-                {
-                    //incorrect
+                    NextLevel();
                 }
             }
+            else
+            {
+                Game.ListData[_preIndexClick].TextVisible = Visibility.Collapsed;
+                Game.ListData[indexClick].TextVisible = Visibility.Collapsed;
+                Game.ListData[indexClick].BkgndItem = GameDef.COLOR_ITEM_NORMAL;
+                Game.ListData[_preIndexClick].BkgndItem = GameDef.COLOR_ITEM_NORMAL;
+            }
+            _preIndexClick = -1;
             isProcessing = false;
         }
 
         public bool IsBoxEmpty(ItemMgn att)
         {
-            if (att == null)
+            if (att == null || string.IsNullOrWhiteSpace(att.Content))
                 return true;
-            if (Game.TypeGame == (int)GameDef.Type.CHARACTER)
-            {
-                if (string.IsNullOrWhiteSpace(att.Content))
-                    return true;
-            }
-            else if (Game.TypeGame == (int)GameDef.Type.CHARACTER)
-            {
-                if (att.Color == "#000000")
-                    return true;
-            }
             return false;
         }
 
         public void GameOver()
         {
             TimerData.Stop();
-            Game.IsEnableControl = true ;
+            Game.IsEnableControl = true;
+            Game.StateGame = (int)GameDef.State.STOP;
             Game.ShowDataWhenGameOver();
             Game.VisibleBkgndGameOver = Visibility.Visible;
         }
-        
+
+        public void NextLevel()
+        {
+            Game.Level++;
+            TimerData.Stop();
+            Game.IsEnableControl = true;
+            Game.StateGame = (int)GameDef.State.STOP;
+            Game.VisibleBkgndNextLevel = Visibility.Visible;
+        }
+
         private void SetTimeCountDown(int level)
         {
-            switch(Game.MatrixData.SizeMatrix)
+            switch (Game.MatrixData.SizeMatrix)
             {
                 case GameDef.SIZE_5:
                     TimerData.ValCountDown = GameDef.TIME_5 - (level - 1) * 2;

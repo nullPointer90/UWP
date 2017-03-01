@@ -1,0 +1,414 @@
+﻿<Page
+    x:Class="Crossword.View.Intelligen"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Crossword.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:VM="using:Crossword.ViewModel"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <VM:IntelligenVM />
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///View/TextBlockStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///View/ButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.TopAppBar>
+        <AppBar>
+            <Grid Background="#663300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="0"
+                    Text="Name : "
+                    Style="{StaticResource txtKey}"
+                />
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="1"
+                    Text="{Binding GameCrossword.TypeGame.GameMng.Name}"
+                    Style="{StaticResource txtValue}"
+                />
+                <TextBlock
+                    Margin="50 0 0 0"
+                    Grid.Column="2"
+                    Text="High Score : "
+                    Style="{StaticResource txtKey}"
+                />
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="3"
+                    Text="{Binding GameCrossword.TypeGame.GameMng.HighScore}"
+                    Style="{StaticResource txtValue}"
+                />
+            </Grid>
+        </AppBar>
+    </Page.TopAppBar>
+    <Grid Background="#663300">
+        <Grid 
+            Background="Black"
+            Opacity="0.6"
+            Visibility="{Binding ControlMng.VisibleBkgndGameOver}"
+            Canvas.ZIndex="10"
+            >
+            <StackPanel 
+                Orientation="Vertical"
+                VerticalAlignment="Center">
+                <TextBlock 
+                Foreground="LightGreen"
+                FontSize="60"
+                FontWeight="Bold"
+                Text="Try again !"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"               
+                />
+                <Button
+                    Style="{StaticResource CircleButton}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="64"
+                    Height="64"
+                    local:AttachProperty.NormalImage="ms-appx:///Assets/Play/RePlay.png"
+                    Command="{Binding BtnReplayClick}"
+                    />
+            </StackPanel>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="100"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Margin="50 20 0 0"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Time  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Count}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Margin="0 20 0 0"
+                    Grid.Column="1"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Scores  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Scores}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Margin="0 20 0 0"
+                    Grid.Column="2"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Level  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Level}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <Button
+                    Grid.Column="3"
+                    Width="64"
+                    Height="64"
+                    Content="Ads"
+                    Background="#966F33"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="LightBlue"
+                    FontWeight="Bold"
+                    FontSize="25"
+                    Click="Button_Click"
+                    />
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border
+                    BorderThickness="1 1 1 1"
+                    Height="5"
+                    CornerRadius="2"
+                    Margin="20 0 20 0 "
+                    >
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="LimeGreen" Offset="0" />
+                            <GradientStop Color="Red" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <UI:AdControl 
+                    Grid.Column="0"
+                    ApplicationId="0af823c3-8ac1-4722-9279-3306242fd09a"
+                    AdUnitId="336179"
+                    HorizontalAlignment="Left"
+                    Height="250"
+                    VerticalAlignment="Top"
+                    Width="300"/>
+                <Button
+                    Grid.Column="1"
+                    Width="100"
+                    Height="100"
+                    Style="{StaticResource ImageButton}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    local:AttachProperty.NormalImage="{Binding ControlMng.ImagePath}"
+                    Command="{Binding BtnUnlockClick}"
+                    />
+                <UI:AdControl 
+                    Grid.Column="2"
+                    ApplicationId="0af823c3-8ac1-4722-9279-3306242fd09a"
+                    AdUnitId="336179"
+                    HorizontalAlignment="Right"
+                    Height="250"
+                    VerticalAlignment="Top"
+                    Width="300"/>
+
+            </Grid>
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <GridView
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Margin="0 10 0 0"
+                    ItemsSource="{Binding GameCrossword.TypeGame.IntellidenObj.ListDataCorrect}"
+                    Visibility="{Binding ControlMng.VisibleBkgndGameOver}"
+                    >
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="Red"
+                                    Text="{Binding}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="20 10 0 0"
+                                    />
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <GridView
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="Auto"
+                    ItemsSource="{Binding ListData}"
+                    >
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBox
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding Val,Mode=TwoWay}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    MaxLength="1"
+                                    Padding="20 10 0 0"
+                                    />
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <StackPanel
+                     Grid.Row="0"
+                     Grid.Column="0">
+                    <GridView
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"                 
+                    Width="Auto"
+                    ItemsSource="{Binding GameCrossword.TypeGame.IntellidenObj.ListDataIntro1}"
+                    >
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                BorderBrush="LightBlue"
+                                BorderThickness="0 0 0 3"
+                                Background="#966F33"
+                                >
+                                    <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="20 5 0 0"      
+                                    />
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <TextBlock
+                        Text="One character right position"
+                        Style="{StaticResource txtIntroCharacter}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="2">
+                    <GridView                 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="Auto"
+                    ItemsSource="{Binding GameCrossword.TypeGame.IntellidenObj.ListDataIntro2}"
+                    >
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                BorderBrush="LightBlue"
+                                BorderThickness="0 0 0 3"
+                                Background="#966F33"
+                                >
+                                    <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                        Padding="20 5 0 0"
+                                    />
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <TextBlock
+                        Text="One character wrong position"
+                        Style="{StaticResource txtIntroCharacter}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0">
+                    <GridView                  
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="Auto"
+                    ItemsSource="{Binding GameCrossword.TypeGame.IntellidenObj.ListDataIntro3}"
+                    >
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                BorderBrush="LightBlue"
+                                BorderThickness="0 0 0 3"
+                                Background="#966F33"
+                                >
+                                    <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                     Padding="20 5 0 0"                                
+                                    />
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <TextBlock
+                        Text="Two characters wrong position"
+                        Style="{StaticResource txtIntroCharacter}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="2">
+                    <GridView
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="Auto"
+                    ItemsSource="{Binding GameCrossword.TypeGame.IntellidenObj.ListDataIntro4}"
+                    >
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                BorderBrush="LightBlue"
+                                BorderThickness="0 0 0 3"
+                                Background="#966F33"
+                                >
+                                    <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                     Padding="20 5 0 0"
+                                    />
+                                </Border>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                    <TextBlock
+                        Text="No character"
+                        Style="{StaticResource txtIntroCharacter}"
+                        />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

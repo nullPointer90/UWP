@@ -1,0 +1,300 @@
+﻿<Page
+    x:Class="Crossword.View.Classic"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Crossword.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:VM="using:Crossword.ViewModel"
+    xmlns:type="using:Crossword.Common"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <VM:ClassicVM />
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ms-appx:///View/TextBlockStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///View/ButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Page.TopAppBar>
+        <AppBar>
+            <Grid Background="#663300">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="0"
+                    Text="Name : "
+                    Style="{StaticResource txtKey}"
+                />
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="1"
+                    Text="{Binding GameCrossword.TypeGame.GameMng.Name}"
+                    Style="{StaticResource txtValue}"
+                />
+                <TextBlock
+                    Margin="50 0 0 0"
+                    Grid.Column="2"
+                    Text="High Score : "
+                    Style="{StaticResource txtKey}"
+                />
+                <TextBlock
+                    Margin="10 0 0 0"
+                    Grid.Column="3"
+                    Text="{Binding GameCrossword.TypeGame.GameMng.HighScore}"
+                    Style="{StaticResource txtValue}"
+                />
+            </Grid>
+        </AppBar>
+    </Page.TopAppBar>
+    <Grid Background="#663300">
+        <Grid 
+            Background="Black"
+            Opacity="0.6"
+            Visibility="{Binding ControlMng.VisibleBkgndGameOver}"
+            Canvas.ZIndex="10"
+            >
+            <StackPanel 
+                Orientation="Vertical"
+                VerticalAlignment="Center">
+            <TextBlock 
+                Foreground="LightGreen"
+                FontSize="60"
+                FontWeight="Bold"
+                Text="Try again!"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"               
+                />
+                <Button
+                    Style="{StaticResource CircleButton}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Width="64"
+                    Height="64"
+                    local:AttachProperty.NormalImage="ms-appx:///Assets/Play/RePlay.png"
+                    Command="{Binding BtnReplayClick}"
+                    />
+            </StackPanel>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition  Width="*"/>
+                    <ColumnDefinition  Width="100"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Margin="50 20 0 0"
+                    Grid.Column="0"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Time  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Count}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Margin="0 20 0 0"
+                    Grid.Column="1"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Scores  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Scores}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <StackPanel
+                    Margin="0 20 0 0"
+                    Grid.Column="2"
+                    Orientation="Horizontal">
+                    <TextBlock 
+                        Text="Level  :"
+                        Style="{StaticResource txtKey}"
+                        />
+                    <TextBlock 
+                        Margin="10 0 0 0"
+                        Text="{Binding GameCrossword.TypeGame.GameMng.Level}"
+                        Style="{StaticResource txtValue}"
+                        />
+                </StackPanel>
+                <Grid
+                    Grid.Column="3">
+                    
+                    <Button
+                        Style="{StaticResource CircleButton}"
+                        Width="64"
+                        Height="64"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0 20 10 0"
+                        Command="{Binding BtnStartClick}"
+                        local:AttachProperty.NormalImage="{Binding ControlMng.ImagePath}"
+                        />
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border
+                    BorderThickness="1 1 1 1"
+                    Height="30"
+                    CornerRadius="15"
+                    Margin="20 0 20 0 "
+                    >
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="LimeGreen" Offset="0" />
+                            <GradientStop Color="Red" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Grid 
+                    BorderThickness="1 1 1 1"
+                    Height="30"
+                    CornerRadius="15"
+                    Margin="20 0 20 0 " >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                        <ColumnDefinition  Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border 
+                        Grid.Column="0"
+                        BorderThickness="0"
+                        CornerRadius="15,0,0,15" 
+                        Background="Black" 
+                        Opacity="{Binding GameCrossword.TypeGame.GameMng.ListOpaciLife[0].Opacity}"/>
+
+                    <Rectangle
+                    Grid.Column="1"
+                    Fill="Black"
+                    Opacity="{Binding GameCrossword.TypeGame.GameMng.ListOpaciLife[1].Opacity}"
+                    />
+                    <Rectangle
+                    Grid.Column="2"
+                    Fill="Black"
+                    Opacity="{Binding GameCrossword.TypeGame.GameMng.ListOpaciLife[2].Opacity}"
+                    />
+                    <Rectangle
+                    Grid.Column="3"
+                    Fill="Black"
+                    Opacity="{Binding GameCrossword.TypeGame.GameMng.ListOpaciLife[3].Opacity}"
+                    />
+                    <Border 
+                        Grid.Column="4"
+                        BorderThickness="0"
+                        CornerRadius="0,15,15,0" 
+                        Background="Black"
+                        Opacity="{Binding GameCrossword.TypeGame.GameMng.ListOpaciLife[4].Opacity}"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="2" 
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GridView
+                    Grid.Row="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding GameCrossword.TypeGame.ListCharactersCorrect}"
+                    IsEnabled="False"
+                    >
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BorderBrush="LightBlue"
+                                BorderThickness="0 0 0 3"
+                                Visibility="Visible"
+                                >
+                                <TextBlock
+                                    Foreground="{Binding Color}"
+                                    Opacity="{Binding Opacity}"
+                                    Text="{Binding Val}"
+                                    FontWeight="Bold"
+                                    FontSize="60"
+                                    />
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </Grid>
+            <Grid Grid.Row="3">
+                <GridView
+                    Width="892"
+                    ItemsSource="{Binding ListCharacterKeyboard}"
+                    VerticalAlignment="Bottom"
+                    Margin="0 0 0 10"
+                    >
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                BorderBrush="Red"
+                                BorderThickness="0 0 0 3"
+                                Opacity="{Binding Opacity}" 
+                                Background="#966F33"
+                                >
+                                <TextBlock
+                                    Width="64"
+                                    Height="64"
+                                    Foreground="LightBlue"
+                                    Text="{Binding Key}"
+                                    FontWeight="Bold"
+                                    FontSize="30"  
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Padding="20 5 0 0"
+                                    />
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <i:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="Tapped">
+                            <core:InvokeCommandAction Command="{Binding KeboardTapped}"/>
+                        </core:EventTriggerBehavior>
+                    </i:Interaction.Behaviors>
+                </GridView>
+            </Grid>
+            <Grid Grid.Row="4">
+                <UI:AdControl ApplicationId="0af823c3-8ac1-4722-9279-3306242fd09a"
+               AdUnitId="336179"
+               HorizontalAlignment="Center"
+               Height="90"
+               VerticalAlignment="Bottom"
+               Width="728"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

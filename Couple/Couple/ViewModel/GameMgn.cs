@@ -22,19 +22,11 @@ namespace Couple.ViewModel
             set { _matrixMgn = value; }
         }
 
-        private int _typeGame;
-
-        public int TypeGame
-        {
-            get { return _typeGame; }
-            set { SetProperty(ref _typeGame, value); }
-        }
-
         private ObservableCollection<ItemMgn> _listData;
         public ObservableCollection<ItemMgn> ListData
         {
             get { return _listData; }
-            set { SetProperty(ref _listData,value); }
+            set { SetProperty(ref _listData, value); }
         }
 
         private int _stateGame;
@@ -42,6 +34,13 @@ namespace Couple.ViewModel
         {
             get { return _stateGame; }
             set { SetProperty(ref _stateGame, value); }
+        }
+
+        private int _level;
+        public int Level
+        {
+            get { return _level; }
+            set { SetProperty(ref _level, value); }
         }
 
         private bool _isEnableControl;
@@ -58,6 +57,13 @@ namespace Couple.ViewModel
             set { SetProperty(ref _visibleBkgndGameOver, value); }
         }
 
+        private Visibility _visibleBkgndNextLevel;
+        public Visibility VisibleBkgndNextLevel
+        {
+            get { return _visibleBkgndNextLevel; }
+            set { SetProperty(ref _visibleBkgndNextLevel, value); }
+        }
+
         public GameMgn()
         {
             InitGame();
@@ -66,9 +72,10 @@ namespace Couple.ViewModel
         public void InitGame()
         {
             _matrixMgn = new MatrixMgn();
-            _typeGame = (int)GameDef.Type.CHARACTER;
             _isEnableControl = true;
+            _level = 1;
             _visibleBkgndGameOver = Visibility.Collapsed;
+            _visibleBkgndNextLevel = Visibility.Collapsed;
             SetSizeMatrix(GameDef.SIZE_5);
             CreateListData();
         }
@@ -78,18 +85,11 @@ namespace Couple.ViewModel
             if (ListData == null)
                 _listData = new ObservableCollection<ItemMgn>();
             ListData.Clear();
-            if(_typeGame == (int)GameDef.Type.CHARACTER)
-            {
-                _data = new Data(new DataCharacters());
-            }
-            else if(_typeGame == (int)GameDef.Type.COLOR)
-            {
-                _data = new Data(new DataColors());
-            }
+            _data = new Data(new DataCharacters());
             List<string> datas = _data.GetRndListData(CalCountListData());
             AddDataToList(datas);
         }
- 
+
         private int CalCountListData()
         {
             return (int)((MatrixData.SizeMatrix * MatrixData.SizeMatrix) / 2);
@@ -97,36 +97,24 @@ namespace Couple.ViewModel
 
         private void AddDataToList(List<string> data)
         {
-            if (data == null || ListData ==null)
+            if (data == null || ListData == null)
                 return;
             List<ItemMgn> tempData = new List<ItemMgn>();
-            //tempData.Add(new ItemMgn() { Content = " ", Color = "#000000", Visible = Visibility.Visible });
-            if (_typeGame == (int)GameDef.Type.CHARACTER)
+            foreach (var item in data)
             {
-                foreach(var item in data)
-                {
-                    tempData.Add(new ItemMgn() { Content = item, Color = ""});
-                    tempData.Add(new ItemMgn() { Content = item, Color = ""});
-                }
-            }
-            else if (_typeGame == (int)GameDef.Type.COLOR)
-            {
-                foreach (var item in data)
-                {
-                    tempData.Add(new ItemMgn() { Color = item, Content = ""});
-                    tempData.Add(new ItemMgn() { Color = item, Content = ""});
-                }
+                tempData.Add(new ItemMgn() { Content = item, Color = "" });
+                tempData.Add(new ItemMgn() { Content = item, Color = "" });
             }
             CreaateRndList(tempData);
         }
 
-        private  void CreaateRndList(List<ItemMgn> tempData)
+        private void CreaateRndList(List<ItemMgn> tempData)
         {
             if (tempData == null)
                 return;
             ListData?.Add(new ItemMgn() { Content = " ", Color = "#000000", Visible = Visibility.Visible });
             Random rnd = new Random();
-            while(tempData.Count > 0)
+            while (tempData.Count > 0)
             {
                 int rndItem = rnd.Next(0, tempData.Count);
                 ListData?.Add(tempData.ElementAt(rndItem));
@@ -142,7 +130,7 @@ namespace Couple.ViewModel
         public void SetSizeMatrix(int size)
         {
             _matrixMgn.SizeMatrix = size;
-            switch(size)
+            switch (size)
             {
                 case GameDef.SIZE_5:
                     _matrixMgn.WidthMatrix = GameDef.WIDTH_MATRIX_5;
@@ -177,13 +165,25 @@ namespace Couple.ViewModel
         {
             if (ListData == null)
                 return;
-            for(int i = 0; i < ListData.Count; i++)
+            for (int i = 0; i < ListData.Count; i++)
             {
-                if(ListData[i].Visible == Visibility.Visible)
+                if (ListData[i].Visible == Visibility.Visible)
                 {
                     ListData[i].TextVisible = Visibility.Visible;
                 }
             }
+        }
+
+        public bool IsCompleteLevel()
+        {
+            if (ListData == null)
+                return false;
+            for(int i = 1; i < ListData.Count; i++)
+            {
+                if (ListData[i].Visible == Visibility.Visible)
+                    return false;
+            }
+            return true;
         }
     }
 }

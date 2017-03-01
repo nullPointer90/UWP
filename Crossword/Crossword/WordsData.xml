@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Words>
+  <easy>
+    <word>Hello</word>
+    <word>Bird</word>
+    <word>Morning</word>
+    <word>Lunch</word>
+    <word>Blood</word>
+    <word>Student</word>
+    <word>School</word>
+    <word>Monday</word>
+    <word>Classic</word>
+    <word>Doctor</word>
+    <word>World</word>
+    <word>Teacher</word>
+    <word>nurse</word>
+    <word>River</word>
+    <word>Tree</word>
+    <word>Paper</word>
+    <word>Bicycle</word>
+    <word>House</word>
+    <word>Hotel</word>
+    <word>hospital</word>
+    <word>Machine</word>
+    <word>Angry</word>
+    <word>Package</word>
+    <word>Project</word>
+    <word>Solution</word>
+    <word>Lion</word>
+    <word>Wood</word>
+    <word>Brake</word>
+    <word>Tower</word>
+    <word>Happy</word>
+    <word>Medium</word>
+    <word>Difficult</word>
+    <word>Change</word>
+    <word>church</word>
+    <word>football</word>
+    <word>Pitch</word>
+    <word>Model</word>
+    <word>Apple</word>
+    <word>friend</word>
+  </easy>
+  <medium>
+    <word1>Hello World</word1>
+    <word1>evil eyes</word1>
+    <word1>forest fires</word1>
+    <word1>plant trees</word1>
+    <word1>looking for</word1>
+    <word1>elementary school</word1>
+    <word1>short films</word1>
+    <word1>celebration</word1>
+    <word1>congratulation</word1>
+    <word1>artificial lake</word1>
+    <word1>tropical forest</word1>
+    <word1>forest fires</word1>
+    <word1>little bird</word1>
+    <word1>beach umbrella</word1>
+    <word1>beach volley</word1>
+    <word1>football shirt</word1>
+    <word1>serious problem</word1>
+    <word1>short films</word1>
+    <word1>best wishes</word1>
+  </medium>
+  <diffical>
+    <word2>Make an offer</word2>
+    <word2>behind the scenes</word2>
+    <word2>pray for peace</word2>
+    <word2>pay a salary to</word2>
+    <word2>Love is blind</word2>
+    <word2>Tit For Tat</word2>
+    <word2>Break the news</word2>
+    <word2>Drive one crazy</word2>
+    <word2>In a bad mood</word2>
+    <word2>Out of the world</word2>
+    <word2>Give it a shot</word2>
+    <word2>Habit cures habit</word2>
+    <word2>Neck or nothing</word2>
+    <word2>Grasp all lose all</word2>
+    <word2>Easy come easy go</word2>
+    <word2>Seeing is believing</word2>
+  </diffical>
+</Words>

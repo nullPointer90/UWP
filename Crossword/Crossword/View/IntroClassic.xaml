@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="Crossword.View.IntroClassic"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Crossword.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="txtCustom">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="LightBlue" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <TextBlock
+            Style="{StaticResource txtCustom}"
+            Grid.Row="1"
+            Text="- You must select the correct word. "
+            />
+        <TextBlock
+            Style="{StaticResource txtCustom}"
+            Grid.Row="2"
+            Text="- You have 5 times to choose wrong. "
+            />
+        <TextBlock
+            Style="{StaticResource txtCustom}"
+            Grid.Row="3"
+            Text="- Time to think every time is 10s. "
+            />
+        <TextBlock
+            Style="{StaticResource txtCustom}"
+            Grid.Row="4"
+            Text="- The higher the level the more difficult levels "
+            />
+        <TextBlock
+            Style="{StaticResource txtCustom}"
+            Grid.Row="5"
+            Text="- Your score is calculated based on the remaining times "
+            />
+    </Grid>
+</UserControl>

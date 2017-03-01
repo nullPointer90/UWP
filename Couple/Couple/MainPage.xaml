@@ -43,10 +43,38 @@
                     <Image
                     Width="64"
                     Height="64"
-                    Source="ms-appx:///Assets/PlayAgain.png"
-                    
+                    Source="ms-appx:///Assets/PlayAgain.png"                    
                     />
                 </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid
+            Background="Black"
+            Canvas.ZIndex="10"
+            Opacity="0.6"
+            Visibility="{Binding Game.VisibleBkgndNextLevel}"
+            >
+            <StackPanel 
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                >
+                <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="Next level"
+                FontSize="60"
+                FontWeight="Bold"
+                Foreground="Red"
+                />
+                <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="{Binding Game.Level}"
+                FontSize="60"
+                FontWeight="Bold"
+                Foreground="Red"
+                />
             </StackPanel>
         </Grid>
         <Grid>
@@ -80,6 +108,7 @@
                         FontWeight="Bold"
                         Margin="10 0 0 0"
                         IsEnabled="{Binding Game.IsEnableControl}"
+                        IsTabStop="False"
                         />
                     
                     <RadioButton 
@@ -90,6 +119,7 @@
                         CommandParameter="2"
                         Margin="10 0 0 0"
                         IsEnabled="{Binding Game.IsEnableControl}"
+                        IsTabStop="False"
                         />
                     
                     <RadioButton 
@@ -99,6 +129,7 @@
                         CommandParameter="3"
                         Margin="10 0 0 0"
                         IsEnabled="{Binding Game.IsEnableControl}"
+                        IsTabStop="False"
                         />
                 </StackPanel >
                 <StackPanel 
@@ -108,28 +139,13 @@
                     BorderBrush="LightBlue" 
                     Margin="0 20 0 0"
                     >
-                    <RadioButton 
-                        x:Name="typeChar"
-                        Content="Character" 
-                        GroupName="typeGame" 
-                        IsChecked="True"
-                        Foreground="LightBlue"
-                        Command="{Binding TypeChecked}"
-                        CommandParameter="1"
+                    <TextBlock
+                        Text="{Binding Game.Level}"
+                        FontSize="60"
                         FontWeight="Bold"
-                        Margin="10 0 0 0"
-                        IsEnabled="{Binding Game.IsEnableControl}"
-                        />
-
-                    <RadioButton 
-                        x:Name="typeColor"
-                        Content="Color" 
-                        GroupName="typeGame" 
-                        Foreground="{Binding color}"
-                        Command="{Binding TypeChecked}"
-                        CommandParameter="2"
-                        Margin="10 0 0 0"
-                        IsEnabled="{Binding Game.IsEnableControl}"
+                        Foreground="LightBlue"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
                         />
                 </StackPanel>
                 <TextBlock
@@ -154,6 +170,7 @@
                     FontWeight="Bold"
                     Foreground="#FAFAFA"
                     IsEnabled="{Binding Game.IsEnableControl}"
+                    IsTabStop="False"
                     />
             </Grid>
             <Grid Grid.Column="1">
@@ -164,6 +181,7 @@
                     VerticalAlignment="Center"
                     Width="{Binding Game.MatrixData.WidthMatrix}"
                     Visibility="{Binding IsChecked,ElementName=typeChar,Converter={StaticResource boolToVisible}}"
+                    IsTabStop="False"
                     >
                     <GridView.ItemTemplate>
                         <DataTemplate>
@@ -185,38 +203,6 @@
                                     Visibility="{Binding TextVisible}"
                                     />
                             </Border>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                    <i:Interaction.Behaviors>
-                        <core:EventTriggerBehavior EventName="Tapped">
-                            <core:InvokeCommandAction Command="{Binding ItemMTClick}" />
-                        </core:EventTriggerBehavior>
-                    </i:Interaction.Behaviors>
-                </GridView>
-                <GridView
-                    x:Name="grdColor"
-                    ItemsSource="{Binding Game.ListData}"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Width="{Binding Game.MatrixData.WidthMatrix}"
-                    Visibility="{Binding IsChecked,ElementName=typeColor,Converter={StaticResource boolToVisible}}"
-                    >
-                    <GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Visibility="{Binding Visible}">
-                            <Border
-                                x:Name="bdMT"
-                                Width="64"
-                                Height="64"
-                                Background="{Binding Color}"
-                                />
-                            <Rectangle
-                                Width="64"
-                                Height="64"
-                                Fill="{Binding BkgndItem}"
-                                Visibility="{Binding Visible}"
-                                />
-                            </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <i:Interaction.Behaviors>
